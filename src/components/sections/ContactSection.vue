@@ -8,12 +8,18 @@
   async function submit() {
     status.value = 'sending'
     try {
-      const res = await fetch('/', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ 'form-name': 'contacto', ...form.value }).toString(),
+        body: new URLSearchParams({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          subject: 'Nuevo contacto desde el portfolio',
+          from_name: 'Portfolio José Gallegos',
+          ...form.value,
+        }).toString(),
       })
-      if (res.ok) {
+      const json = await res.json()
+      if (json.success) {
         status.value = 'success'
         form.value = { nombre: '', email: '', mensaje: '' }
       } else {
@@ -112,9 +118,7 @@
             </button>
           </div>
 
-          <form v-else name="contacto" @submit.prevent="submit" class="space-y-4">
-            <input type="hidden" name="form-name" value="contacto" />
-            <input type="hidden" name="bot-field" />
+          <form v-else @submit.prevent="submit" class="space-y-4">
 
             <div>
               <label class="block text-xs text-slate-500 mb-1.5 font-mono uppercase tracking-wider">Nombre</label>
