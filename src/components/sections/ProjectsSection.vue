@@ -75,8 +75,9 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <article v-for="project in projects" :key="project.name"
-          class="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-600 transition-all duration-300 hover:-translate-y-1">
+        <article v-for="(project, i) in projects" :key="project.name"
+          class="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-600 transition-all duration-300 hover:-translate-y-1"
+          data-aos="fade-up" :data-aos-delay="i * 80">
           <!-- Imagen del proyecto -->
           <div class="relative h-48 overflow-hidden">
             <img :src="project.image" :alt="project.name"

@@ -57,7 +57,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
         <!-- Bio + stats -->
-        <div class="space-y-5">
+        <div class="space-y-5" data-aos="fade-right">
           <p class="text-slate-300 text-lg leading-relaxed">
             Soy desarrollador web con más de 4 años construyendo aplicaciones a medida.
             Mi especialidad es <strong class="text-white">PHP con Laravel</strong> —
@@ -88,7 +88,7 @@
         </div>
 
         <!-- Tech icon grid -->
-        <div class="space-y-6">
+        <div class="space-y-6" data-aos="fade-left" data-aos-delay="100">
           <div v-for="group in techGroups" :key="group.label">
             <p class="text-xs font-mono text-slate-500 uppercase tracking-widest mb-3">{{ group.label }}</p>
             <div class="flex flex-wrap gap-3">
