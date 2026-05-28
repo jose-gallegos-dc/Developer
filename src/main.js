@@ -8,7 +8,8 @@ createApp(App).mount('#app')
 
 AOS.init({
   duration: 700,
-  once: true,
+  once: false,
+  mirror: true,
   easing: 'ease-out-cubic',
   offset: 60,
 })

@@ -8,7 +8,7 @@ import ContactSection from './components/sections/ContactSection.vue'
 </script>
 
 <template>
-  <div class="bg-slate-950 text-slate-100 min-h-screen">
+  <div class="bg-slate-950 text-slate-100 min-h-screen overflow-x-hidden">
     <AppNavbar />
     <main>
       <HeroSection />

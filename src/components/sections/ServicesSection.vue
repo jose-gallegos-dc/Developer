@@ -55,16 +55,16 @@ const services = [
 </script>
 
 <template>
-  <section id="servicios" class="py-24 bg-slate-900/40">
+  <section id="servicios" class="py-16 bg-slate-900/40">
     <div class="max-w-6xl mx-auto px-6">
 
       <p class="text-cyan-400 text-xs font-mono tracking-widest uppercase mb-3 text-center" data-aos="fade-up">
         03. Servicios
       </p>
-      <h2 class="text-4xl font-bold mb-4 tracking-tight text-center" data-aos="fade-up" data-aos-delay="50">
+      <h2 class="text-4xl font-bold mb-3 tracking-tight text-center" data-aos="fade-up" data-aos-delay="50">
         ¿En qué puedo ayudarte?
       </h2>
-      <p class="text-slate-400 mb-16 text-center mx-auto max-w-xl" data-aos="fade-up" data-aos-delay="100">
+      <p class="text-slate-400 mb-10 text-center mx-auto max-w-xl text-sm" data-aos="fade-up" data-aos-delay="100">
         No vendo horas — construyo soluciones. Si tienes un proyecto claro o una idea por definir,
         podemos trabajarlo juntos de principio a fin.
       </p>
@@ -77,16 +77,16 @@ const services = [
           data-aos="fade-up"
           :data-aos-delay="i * 80"
         >
-          <Icon :icon="service.icon" class="w-9 h-9 text-cyan-400 mb-4 shrink-0" />
+          <Icon :icon="service.icon" class="w-8 h-8 text-cyan-400 mb-3 shrink-0" />
           <h3 class="text-white font-semibold text-lg mb-2">{{ service.title }}</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-5">{{ service.description }}</p>
-          <ul class="space-y-2 mt-auto">
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">{{ service.description }}</p>
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-auto">
             <li
               v-for="item in service.items"
               :key="item"
               class="flex items-center gap-2 text-sm text-slate-300"
             >
-              <span class="text-cyan-400 font-mono text-xs shrink-0">▸</span>
+              <span class="text-cyan-400 font-mono shrink-0">▸</span>
               {{ item }}
             </li>
           </ul>

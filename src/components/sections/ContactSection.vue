@@ -33,8 +33,8 @@
   const contacts = [
     {
       label: 'WhatsApp',
-      value: '+52 1 961 249 1813',
-      href: 'https://wa.me/521961249813?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20servicios%20%F0%9F%91%8B',
+      value: '+52 961 249 1813',
+      href: 'https://wa.me/529612491813?text=Hola,%20Me%20conocer%20m%C3%A1s%20sobre%20tus%20servicios',
       icon: 'ri:whatsapp-fill',
       iconColor: 'text-green-400',
       ringColor: 'border-green-500/30 bg-green-500/10 group-hover:border-green-400',

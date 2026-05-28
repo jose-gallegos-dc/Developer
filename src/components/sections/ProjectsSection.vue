@@ -62,11 +62,11 @@
 </script>
 
 <template>
-  <section id="proyectos" class="py-24">
+  <section id="proyectos" class="py-12">
     <div class="max-w-6xl mx-auto px-6">
 
       <p class="text-cyan-400 text-xs font-mono tracking-widest uppercase mb-3 text-center">02. Proyectos</p>
-      <div class="flex flex-col items-center gap-4 mb-16">
+      <div class="flex flex-col items-center gap-3 mb-8">
         <h2 class="text-4xl font-bold tracking-tight text-center">Clientes &amp; proyectos</h2>
         <span class="inline-flex items-center gap-1.5 text-xs text-slate-400 border border-slate-700 bg-slate-900 px-4 py-1.5 rounded-full font-mono">
           <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
@@ -74,14 +74,15 @@
         </span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <article v-for="(project, i) in projects" :key="project.name"
           class="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-600 transition-all duration-300 hover:-translate-y-1"
           data-aos="fade-up" :data-aos-delay="i * 80">
+
           <!-- Imagen del proyecto -->
-          <div class="relative h-48 overflow-hidden">
+          <div class="relative bg-slate-800 overflow-hidden" style="height: 160px;">
             <img :src="project.image" :alt="project.name"
-              class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              class="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
               @error="onImgError" />
             <!-- Placeholder si no hay imagen -->
             <div
@@ -90,6 +91,8 @@
                 {{ project.name }}
               </span>
             </div>
+            <!-- Gradiente inferior para suavizar el corte con el contenido -->
+            <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none"></div>
             <!-- Badge de tipo superpuesto -->
             <span
               class="absolute top-3 left-3 text-xs font-mono text-slate-300 bg-slate-950/80 backdrop-blur-sm border border-slate-700 px-2.5 py-1 rounded-full">
@@ -98,20 +101,20 @@
           </div>
 
           <!-- Contenido -->
-          <div class="p-6">
+          <div class="p-4">
             <!-- Tech badges -->
-            <div class="flex flex-wrap gap-2 mb-4">
+            <div class="flex flex-wrap gap-1.5 mb-3">
               <span v-for="tech in project.tech" :key="tech.name"
-                class="inline-flex items-center gap-1.5 text-xs text-slate-300 border border-slate-700 rounded-full px-2.5 py-1 font-mono">
+                class="inline-flex items-center gap-1.5 text-xs text-slate-300 border border-slate-700 rounded-full px-2.5 py-0.5 font-mono">
                 <Icon :icon="tech.icon" class="w-3.5 h-3.5 shrink-0" />
                 {{ tech.name }}
               </span>
             </div>
 
-            <h3 class="text-white font-bold text-xl mb-2 group-hover:text-cyan-400 transition-colors duration-200">
+            <h3 class="text-white font-bold text-lg mb-1.5 group-hover:text-cyan-400 transition-colors duration-200">
               {{ project.name }}
             </h3>
-            <p class="text-slate-400 text-sm leading-relaxed">
+            <p class="text-slate-400 text-sm leading-relaxed line-clamp-2">
               {{ project.description }}
             </p>
           </div>
