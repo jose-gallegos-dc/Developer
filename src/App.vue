@@ -5,10 +5,13 @@ import AboutSection from './components/sections/AboutSection.vue'
 import ProjectsSection from './components/sections/ProjectsSection.vue'
 import ServicesSection from './components/sections/ServicesSection.vue'
 import ContactSection from './components/sections/ContactSection.vue'
+import { useReveal } from './composables/useReveal'
+
+useReveal()
 </script>
 
 <template>
-  <div class="bg-slate-950 text-slate-100 min-h-screen overflow-x-hidden">
+  <div class="min-h-screen bg-paper text-ink">
     <AppNavbar />
     <main>
       <HeroSection />

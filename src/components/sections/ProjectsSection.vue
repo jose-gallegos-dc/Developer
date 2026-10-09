@@ -1,125 +1,74 @@
 <script setup>
-  import { Icon } from '@iconify/vue'
-
   const projects = [
     {
       name: 'Unifam',
       type: 'Sistema POS',
-      description: 'POS multisucursal con precios diferenciados por unidad, control de inventario completo — entradas, salidas, transferencias y resurtido — más facturación electrónica 4.0 integrada y validada con el SAT.',
-      tech: [
-        { name: 'Laravel 12', icon: 'logos:laravel' },
-        { name: 'Vue 3', icon: 'logos:vue' },
-        { name: 'Tailwind', icon: 'logos:tailwindcss' },
-        { name: 'MariaDB', icon: 'logos:mariadb' },
-      ],
+      description: 'POS multisucursal con precios diferenciados por unidad, control de inventario completo (entradas, salidas, transferencias y resurtido) y facturación electrónica 4.0 integrada y validada con el SAT.',
+      tech: ['Laravel 12', 'Vue 3', 'Tailwind', 'MariaDB'],
       image: '/img/projects/unifam.png',
-      placeholder: 'from-indigo-950 to-slate-800',
     },
     {
       name: 'Modii',
-      type: 'SaaS Platform',
+      type: 'Plataforma SaaS',
       description: 'Plataforma centralizada para gestión de clientes, proveedores y wallets. Procesa pagos, cobros y movimientos financieros en tiempo real con una interfaz reactiva y sin recargas.',
-      tech: [
-        { name: 'Laravel 12', icon: 'logos:laravel' },
-        { name: 'Livewire 4', icon: 'logos:livewire' },
-        { name: 'Tailwind', icon: 'logos:tailwindcss' },
-      ],
+      tech: ['Laravel 12', 'Livewire 4', 'Tailwind'],
       image: '/img/projects/modii.png',
-      placeholder: 'from-cyan-950 to-slate-800',
     },
     {
       name: 'Viáticos Cauda',
-      type: 'Web App',
-      description: 'Control de viáticos para agentes de servicio: registro de rutas, comprobación de gastos y autorizaciones con flujo agente → administrador. Reportes en tiempo real para supervisión precisa de montos otorgados vs. comprobados.',
-      tech: [
-        { name: 'Laravel 10', icon: 'logos:laravel' },
-        { name: 'Bootstrap 5', icon: 'logos:bootstrap' },
-        { name: 'jQuery', icon: 'logos:jquery' },
-        { name: 'MySQL', icon: 'logos:mysql' },
-      ],
-      image: '/img/projects/viaticos.png',
-      placeholder: 'from-emerald-950 to-slate-800',
+      type: 'Aplicación web',
+      description: 'Control de viáticos para agentes de servicio: registro de rutas, comprobación de gastos y autorizaciones con flujo agente → administrador. Reportes en tiempo real de montos otorgados contra comprobados.',
+      tech: ['Laravel 10', 'Bootstrap 5', 'jQuery', 'MySQL'],
+      image: '/img/projects/cauda_viaticos.png',
     },
     {
       name: 'Eco y Caos',
-      type: 'E-commerce',
-      description: 'Tienda en línea de ropa deportiva con catálogo dinámico, carrito de compras y pagos seguros vía Mercado Pago. Panel administrativo completo para gestión de productos, órdenes e inventario.',
-      tech: [
-        { name: 'Laravel 10', icon: 'logos:laravel' },
-        { name: 'Bootstrap 5', icon: 'logos:bootstrap' },
-        { name: 'jQuery', icon: 'logos:jquery' },
-        { name: 'MySQL', icon: 'logos:mysql' },
-      ],
+      type: 'Tienda en línea',
+      description: 'Tienda de ropa deportiva con catálogo dinámico, carrito de compras y pagos seguros vía Mercado Pago. Panel administrativo para gestión de productos, órdenes e inventario.',
+      tech: ['Laravel 10', 'Bootstrap 5', 'jQuery', 'MySQL'],
       image: '/img/projects/eco-caos.png',
-      placeholder: 'from-orange-950 to-slate-800',
     },
   ]
 
+
   function onImgError(e) {
-    e.target.style.display = 'none'
-    e.target.nextElementSibling.style.display = 'flex'
+    e.target.closest('[data-annex]')?.classList.add('hidden')
   }
 </script>
 
 <template>
-  <section id="proyectos" class="py-12">
-    <div class="max-w-6xl mx-auto px-6">
+  <section id="proyectos" class="border-t border-ink/10 bg-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
 
-      <p class="text-cyan-400 text-xs font-mono tracking-widest uppercase mb-3 text-center">02. Proyectos</p>
-      <div class="flex flex-col items-center gap-3 mb-8">
-        <h2 class="text-4xl font-bold tracking-tight text-center">Clientes &amp; proyectos</h2>
-        <span class="inline-flex items-center gap-1.5 text-xs text-slate-400 border border-slate-700 bg-slate-900 px-4 py-1.5 rounded-full font-mono">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-          Algunos trabajos recientes
-        </span>
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <h2 data-reveal class="type-display text-5xl text-ink sm:text-6xl">Proyectos</h2>
+        <p data-reveal class="max-w-sm text-ink-soft">
+          Algunos trabajos recientes: punto de venta, finanzas, viáticos y comercio en línea.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <article v-for="(project, i) in projects" :key="project.name"
-          class="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-600 transition-all duration-300 hover:-translate-y-1"
-          data-aos="fade-up" :data-aos-delay="i * 80">
+      <ol class="mt-14 border-t border-ink/20">
+        <li v-for="(project, i) in projects" :key="project.name"
+          class="group grid gap-8 border-b border-ink/10 py-12 lg:grid-cols-12 lg:gap-12 lg:py-16">
 
-          <!-- Imagen del proyecto -->
-          <div class="relative bg-slate-800 overflow-hidden" style="height: 160px;">
-            <img :src="project.image" :alt="project.name"
-              class="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+          <figure data-annex data-reveal-image
+            :class="['overflow-hidden rounded-lg border border-ink/10 bg-white shadow-[0_1px_2px_rgb(21_32_29/0.06),0_16px_32px_-16px_rgb(21_32_29/0.28)] transition-shadow duration-500 group-hover:shadow-[0_2px_4px_rgb(21_32_29/0.08),0_24px_44px_-18px_rgb(21_32_29/0.36)] lg:col-span-7', i % 2 === 1 ? 'lg:order-2' : '']">
+            <img :src="project.image" :alt="`Captura de ${project.name}`" loading="lazy"
+              class="aspect-[16/9] w-full object-cover object-top-left transition-transform duration-700 ease-out group-hover:scale-[1.02]"
               @error="onImgError" />
-            <!-- Placeholder si no hay imagen -->
-            <div
-              :class="['bg-gradient-to-br', project.placeholder, 'absolute inset-0 hidden items-center justify-center']">
-              <span class="text-3xl font-extrabold text-white/10 select-none tracking-tight">
-                {{ project.name }}
-              </span>
-            </div>
-            <!-- Gradiente inferior para suavizar el corte con el contenido -->
-            <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none"></div>
-            <!-- Badge de tipo superpuesto -->
-            <span
-              class="absolute top-3 left-3 text-xs font-mono text-slate-300 bg-slate-950/80 backdrop-blur-sm border border-slate-700 px-2.5 py-1 rounded-full">
-              {{ project.type }}
-            </span>
-          </div>
+          </figure>
 
-          <!-- Contenido -->
-          <div class="p-4">
-            <!-- Tech badges -->
-            <div class="flex flex-wrap gap-1.5 mb-3">
-              <span v-for="tech in project.tech" :key="tech.name"
-                class="inline-flex items-center gap-1.5 text-xs text-slate-300 border border-slate-700 rounded-full px-2.5 py-0.5 font-mono">
-                <Icon :icon="tech.icon" class="w-3.5 h-3.5 shrink-0" />
-                {{ tech.name }}
-              </span>
-            </div>
+          <div data-reveal :class="['relative flex flex-col justify-center lg:col-span-5', i % 2 === 1 ? 'lg:order-1' : '']">
+            <h3 class="type-display text-4xl text-ink sm:text-[2.75rem]">{{ project.name }}</h3>
+            <p class="mt-2 font-medium text-accent">{{ project.type }}</p>
 
-            <h3 class="text-white font-bold text-lg mb-1.5 group-hover:text-cyan-400 transition-colors duration-200">
-              {{ project.name }}
-            </h3>
-            <p class="text-slate-400 text-sm leading-relaxed line-clamp-2">
-              {{ project.description }}
-            </p>
+            <p class="mt-5 leading-relaxed text-ink-soft">{{ project.description }}</p>
+
+            <p class="type-label mt-6">Tecnologías</p>
+            <p class="mt-1.5 font-medium text-ink">{{ project.tech.join(' · ') }}</p>
           </div>
-        </article>
-      </div>
+        </li>
+      </ol>
 
     </div>
   </section>

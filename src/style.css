@@ -1,8 +1,181 @@
 @import "tailwindcss";
 
-html,
-body {
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  scroll-padding-top: 4rem;
+@theme {
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #fbfbfa;
+  --color-mist: #eef1f0;
+  --color-ink: #15201d;
+  --color-ink-soft: #4a5753;
+  --color-accent: #2337a6;
+  --color-accent-dark: #18277a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    scrollbar-color: color-mix(in oklab, var(--color-ink) 40%, transparent) var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+    font-variation-settings: "wdth" 100;
+    caret-color: var(--color-accent);
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 18%, var(--color-paper));
+    color: var(--color-ink);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /* Titulares: grotesca condensada de peso alto */
+  .type-display {
+    font-variation-settings: "wdth" 74;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-wrap: balance;
+  }
+
+  /* Etiquetas de datos (término de una lista de definición, encabezado de tabla) */
+  .type-label {
+    font-variation-settings: "wdth" 90;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+
+  /* Entrada única al cargar: el hero aparece de forma escalonada.
+     El estado final es el visible por defecto; sin movimiento no se anima nada. */
+  @media (prefers-reduced-motion: no-preference) {
+    .rise {
+      animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(var(--i, 0) * 0.08s);
+    }
+  }
+}
+
+@layer components {
+  /* Botón primario: se eleva un poco al pasar el cursor y cede al presionarlo */
+  .btn-primary {
+    transition:
+      background-color 0.2s ease,
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgb(24 39 122 / 0.12), 0 10px 20px -10px rgb(24 39 122 / 0.55);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 1px 2px rgb(24 39 122 / 0.15);
+    transition-duration: 0.08s;
+  }
+
+  /* Enlace de texto cuyo subrayado se dibuja de izquierda a derecha */
+  .link-grow {
+    background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat,
+      linear-gradient(color-mix(in oklab, currentColor 30%, transparent), color-mix(in oklab, currentColor 30%, transparent)) left bottom / 100% 1px no-repeat;
+    background-size: 0% 1px, 100% 1px;
+    padding-bottom: 2px;
+    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .link-grow:hover {
+    background-size: 100% 1px, 100% 1px;
+  }
+
+  /* Cabecera: gana sombra al dejar la parte superior de la página */
+  .site-header {
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+
+  .site-header.is-scrolled {
+    background-color: color-mix(in oklab, var(--color-paper) 96%, transparent);
+    box-shadow: 0 1px 2px rgb(21 32 29 / 0.04), 0 8px 24px -16px rgb(21 32 29 / 0.25);
+  }
+
+  /* Menú móvil y cambio de formulario a confirmación */
+  .menu-enter-active,
+  .menu-leave-active,
+  .swap-enter-active,
+  .swap-leave-active {
+    transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .menu-enter-from,
+  .menu-leave-to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  .swap-enter-from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .swap-leave-to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .check-pop {
+      animation: check-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary,
+    .btn-primary:hover,
+    .btn-primary:active {
+      transform: none;
+    }
+
+    .menu-enter-active,
+    .menu-leave-active,
+    .swap-enter-active,
+    .swap-leave-active {
+      transition: none;
+    }
+  }
+}
+
+@keyframes check-pop {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }

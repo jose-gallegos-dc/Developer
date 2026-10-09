@@ -1,110 +1,55 @@
 <script setup>
-  import { onMounted, ref } from 'vue'
-  import { gsap } from 'gsap'
-  import { Icon } from '@iconify/vue'
-  import '../../assets/css/hero.css'
+  import { email, github } from '../../data/contact'
 
-  const photoWrapper = ref(null)
-  const photoContainer = ref(null)
-  const realPhoto = ref(null)
-
-  function runReveal() {
-    const wrapper = photoWrapper.value
-    const container = photoContainer.value
-    const img = realPhoto.value
-    if (!wrapper || !container || !img) return
-
-    const tl = gsap.timeline({ delay: 0.1 })
-
-    // 1. El wrapper entra deslizándose desde la izquierda (aprovecha el espacio vacío)
-    tl.from(wrapper, {
-      x: -90,
-      opacity: 0,
-      duration: 0.55,
-      ease: 'power3.out',
-    })
-      // 2. Wipe de izquierda a derecha dentro del círculo
-      .fromTo(
-        container,
-        { clipPath: 'inset(0 100% 0 0 round 9999px)' },
-        { clipPath: 'inset(0 0% 0 0 round 9999px)', duration: 0.55, ease: 'power2.inOut' },
-        '<0.1',
-      )
-      // 3. Glow aparece con rebote suave
-      .from('.photo-glow', {
-        opacity: 0,
-        scale: 0.4,
-        duration: 0.7,
-        ease: 'back.out(1.4)',
-      }, '<0.15')
-  }
-
-  onMounted(() => {
-    const img = realPhoto.value
-    if (!img) return
-    if (img.complete && img.naturalWidth > 0) {
-      runReveal()
-    } else {
-      img.addEventListener('load', runReveal, { once: true })
-      img.addEventListener('error', runReveal, { once: true })
-    }
-  })
+  const facts = [
+    { label: 'Especialidad', value: 'PHP y Laravel, de la v8 a la actual' },
+    { label: 'Experiencia', value: 'Más de 4 años · 12 proyectos entregados' },
+    { label: 'Frontend', value: 'Vue.js, Inertia.js y Livewire con Tailwind' },
+    { label: 'Despliegue', value: 'Nginx en VPS, hosting compartido y Ubuntu Server físico' },
+  ]
 </script>
 
 <template>
-  <section id="inicio" class="hero-section min-h-screen pt-16 flex items-center relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center w-full">
+  <section id="inicio" class="pt-16">
+    <div class="mx-auto grid max-w-6xl gap-12 px-4 pb-20 pt-12 sm:px-6 md:grid-cols-[1fr_16rem] md:items-start lg:grid-cols-[1fr_20rem] lg:gap-16 lg:pb-28 lg:pt-20">
 
-      <!-- Foto con animación wipe desde la izquierda -->
-      <div class="order-1 lg:order-2 flex justify-center">
-        <div ref="photoWrapper" class="relative">
-          <div class="photo-glow absolute -inset-4 rounded-full opacity-20 blur-2xl"></div>
-          <div ref="photoContainer"
-            class="relative w-52 h-52 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-2 border-slate-700">
-            <img ref="realPhoto" src="/img/jose_gallegos.png" alt="José Gallegos"
-              class="w-full h-full object-cover object-top" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Texto -->
-      <div class="order-2 lg:order-1 space-y-7 text-center lg:text-left">
-
-        <div data-aos="fade-right">
-          <p class="text-slate-400 text-base font-light tracking-wide mb-1">Hola, soy</p>
-          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-none tracking-tight text-white">
-            José Gallegos
-          </h1>
-          <p class="text-2xl lg:text-3xl font-semibold italic text-cyan-400 mt-2">
-            Desarrollador Web
-          </p>
-        </div>
-
-        <p class="text-slate-400 text-base leading-relaxed max-w-md mx-auto lg:mx-0" data-aos="fade-right"
-          data-aos-delay="100">
-          Me especializo en <span class="text-slate-200 font-medium">Laravel</span> para construir
-          backends sólidos, <span class="text-slate-200 font-medium">Vue.js</span> para interfaces
-          que se sienten rápidas, bases de datos relacionales bien diseñadas y despliegues en
-          servidores compartidos o dedicados —
-          <span class="text-slate-200 font-medium">incluso servidores físicos con Ubuntu</span>.
-          Si tienes un proyecto en mente,
-          <span class="text-cyan-400 font-medium">construyámoslo juntos</span>.
+      <div class="order-2 md:order-1">
+        <h1 class="rise type-display text-[clamp(3.25rem,10vw,6rem)] text-ink">José Gallegos</h1>
+        <p class="rise mt-3 text-2xl font-semibold text-accent sm:text-3xl" style="--i: 1">Desarrollador web</p>
+        <p class="rise mt-6 max-w-xl text-xl leading-relaxed text-ink-soft" style="--i: 2">
+          Construyo aplicaciones web a medida: backends sólidos con Laravel, interfaces con Vue
+          y el despliegue en el servidor donde todo corre.
         </p>
 
-        <div class="flex items-center gap-5 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="200">
-          <a href="https://wa.me/529612491813?text=Hola,%20Me%20conocer%20m%C3%A1s%20sobre%20tus%20servicios"
-            target="_blank" rel="noopener noreferrer"
-            class="btn-shimmer inline-flex items-center gap-2 border border-slate-500 text-slate-200 font-medium px-5 py-2.5 rounded-full hover:border-cyan-400 hover:text-cyan-400 transition-colors duration-200 text-sm">
-            <Icon icon="ri:whatsapp-fill" class="w-4 h-4 shrink-0" />
-            Conversemos
-          </a>
+        <dl class="rise mt-10 max-w-2xl divide-y divide-ink/10 border-y border-ink/10" style="--i: 3">
+          <div v-for="fact in facts" :key="fact.label"
+            class="grid gap-1 py-3.5 sm:grid-cols-[9rem_1fr] sm:items-baseline sm:gap-4">
+            <dt class="type-label">{{ fact.label }}</dt>
+            <dd class="font-medium text-ink">{{ fact.value }}</dd>
+          </div>
+        </dl>
 
-          <a href="https://github.com/jose-gallegos-dc" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-            class="text-slate-500 hover:text-cyan-400 transition-colors">
-            <Icon icon="mdi:github" class="w-6 h-6" />
+        <div class="rise mt-10 flex flex-wrap items-center gap-x-6 gap-y-4" style="--i: 4">
+          <a href="#contacto"
+            class="inline-flex items-center btn-primary rounded-md bg-accent hover:bg-accent-dark px-6 py-3.5 text-base font-semibold text-paper">
+            Contactarme
+          </a>
+          <a href="#proyectos" class="link-grow font-semibold text-ink">
+            Ver proyectos
           </a>
         </div>
 
+        <p class="rise mt-8 flex flex-col gap-2 text-sm text-ink-soft sm:flex-row sm:gap-0" style="--i: 5">
+          <a :href="`mailto:${email}`" class="self-start underline decoration-ink/25 hover:text-ink hover:decoration-ink">{{ email }}</a>
+          <span class="mx-2 hidden sm:inline" aria-hidden="true">·</span>
+          <a :href="github.href" target="_blank" rel="noopener noreferrer"
+            class="self-start underline decoration-ink/25 hover:text-ink hover:decoration-ink">github.com/{{ github.display }}</a>
+        </p>
+      </div>
+
+      <div class="order-1 md:order-2">
+        <img src="/img/jose_gallegos.png" alt="Fotografía de José Gallegos" width="833" height="765"
+          class="rise aspect-[4/5] w-44 rounded-lg object-cover object-top sm:w-56 md:w-full" style="--i: 1" />
       </div>
     </div>
   </section>

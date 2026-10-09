@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue'
   import { Icon } from '@iconify/vue'
+  import { email, whatsapp, github } from '../../data/contact'
 
   const form = ref({ nombre: '', email: '', mensaje: '' })
   const status = ref('idle')
@@ -31,141 +32,106 @@
   }
 
   const contacts = [
-    {
-      label: 'WhatsApp',
-      value: '+52 961 249 1813',
-      href: 'https://wa.me/529612491813?text=Hola,%20Me%20conocer%20m%C3%A1s%20sobre%20tus%20servicios',
-      icon: 'ri:whatsapp-fill',
-      iconColor: 'text-green-400',
-      ringColor: 'border-green-500/30 bg-green-500/10 group-hover:border-green-400',
-      textHover: 'group-hover:text-green-400',
-    },
-    {
-      label: 'Correo electrónico',
-      value: 'jose.gallegos.delcarpio@gmail.com',
-      href: 'mailto:jose.gallegos.delcarpio@gmail.com',
-      icon: 'heroicons:envelope',
-      iconColor: 'text-cyan-400',
-      ringColor: 'border-slate-700 bg-slate-800 group-hover:border-cyan-400',
-      textHover: 'group-hover:text-cyan-400',
-    },
-    {
-      label: 'GitHub',
-      value: 'jose-gallegos-dc',
-      href: 'https://github.com/jose-gallegos-dc',
-      icon: 'mdi:github',
-      iconColor: 'text-slate-400',
-      ringColor: 'border-slate-700 bg-slate-800 group-hover:border-cyan-400',
-      textHover: 'group-hover:text-cyan-400',
-    },
+    { label: 'Correo', value: email, href: `mailto:${email}` },
+    { label: 'WhatsApp', value: whatsapp.display, href: whatsapp.href, external: true },
+    { label: 'GitHub', value: github.display, href: github.href, external: true },
   ]
+
+  const fieldClass = 'w-full rounded-md border border-ink/20 bg-white px-4 py-3 text-ink placeholder:text-ink-soft/80 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
 </script>
 
 <template>
-  <section id="contacto" class="py-24">
-    <div class="max-w-6xl mx-auto px-6">
+  <section id="contacto" class="border-t border-ink/10 bg-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
 
-      <p class="text-cyan-400 text-xs font-mono tracking-widest uppercase mb-3 text-center" data-aos="fade-up">
-        04. Contacto
-      </p>
-      <h2 class="text-4xl font-bold mb-4 tracking-tight text-center" data-aos="fade-up" data-aos-delay="50">
-        Hablemos
-      </h2>
-      <p class="text-slate-400 mb-16 text-center mx-auto max-w-lg" data-aos="fade-up" data-aos-delay="100">
-        ¿Tienes un proyecto en mente o quieres saber si puedo ayudarte?
-        Escríbeme y te respondo en menos de 24 horas.
-      </p>
+      <div class="grid gap-14 lg:grid-cols-12 lg:gap-16">
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-
-        <!-- Info -->
-        <div class="space-y-8" data-aos="fade-right">
-          <p class="text-slate-300 leading-relaxed">
-            Prefiero entender bien tu proyecto antes de hablar de costos o tiempos.
-            Cuéntame qué quieres construir, cuál es el problema que resuelve y para cuándo lo necesitas —
-            con eso ya puedo darte una idea clara de cómo podemos trabajarlo.
+        <div class="lg:col-span-5">
+          <h2 data-reveal class="type-display text-5xl text-ink sm:text-6xl">Hablemos</h2>
+          <p data-reveal class="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">
+            ¿Tienes una vacante, un proyecto en mente o quieres saber si puedo ayudarte?
+            Escríbeme y te respondo en menos de 24 horas.
           </p>
 
-          <div class="space-y-4">
-            <a v-for="contact in contacts" :key="contact.label" :href="contact.href" target="_blank"
-              rel="noopener noreferrer" class="flex items-center gap-3 group">
-              <span
-                :class="['w-10 h-10 rounded-lg border flex items-center justify-center shrink-0 transition-colors', contact.ringColor]">
-                <Icon :icon="contact.icon" :class="['w-5 h-5', contact.iconColor]" />
-              </span>
-              <div>
-                <p :class="['text-white text-sm font-medium transition-colors', contact.textHover]">
-                  {{ contact.label }}
-                </p>
-                <p class="text-slate-500 text-xs font-mono">{{ contact.value }}</p>
-              </div>
-            </a>
-          </div>
+          <dl class="mt-10 border-t border-ink/20">
+            <div v-for="contact in contacts" :key="contact.label" data-reveal
+              class="grid gap-0.5 border-b border-ink/10 py-4 sm:grid-cols-[6.5rem_1fr] sm:items-baseline sm:gap-4">
+              <dt class="type-label">{{ contact.label }}</dt>
+              <dd class="min-w-0">
+                <a :href="contact.href" :target="contact.external ? '_blank' : undefined"
+                  :rel="contact.external ? 'noopener noreferrer' : undefined"
+                  class="break-words font-medium text-accent underline decoration-accent/30 hover:decoration-accent">
+                  {{ contact.value }}
+                </a>
+              </dd>
+            </div>
+          </dl>
         </div>
 
-        <!-- Formulario -->
-        <div data-aos="fade-left">
-          <div v-if="status === 'success'"
-            class="bg-green-500/10 border border-green-500/30 rounded-xl p-8 text-center space-y-3">
-            <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto">
-              <Icon icon="heroicons:check" class="w-6 h-6 text-green-400" />
+        <div class="lg:col-span-7">
+          <div data-reveal class="rounded-xl bg-mist p-6 sm:p-10">
+
+            <Transition name="swap" mode="out-in">
+            <div v-if="status === 'success'" class="relative py-16 text-center" role="status">
+              <span class="check-pop mx-auto flex size-12 items-center justify-center rounded-full bg-accent text-paper">
+                <Icon icon="heroicons:check" class="size-6" />
+              </span>
+              <p class="mt-6 text-lg font-semibold text-ink">Tu mensaje llegó a mi bandeja.</p>
+              <p class="mt-1 text-ink-soft">Te respondo en menos de 24 horas.</p>
+              <button type="button" class="mt-6 font-semibold text-accent underline decoration-accent/30 hover:decoration-accent"
+                @click="status = 'idle'">
+                Escribir otro mensaje
+              </button>
             </div>
-            <p class="text-white font-semibold">¡Mensaje enviado!</p>
-            <p class="text-slate-400 text-sm">Te respondo en menos de 24 horas.</p>
-            <button @click="status = 'idle'"
-              class="text-cyan-400 text-sm underline underline-offset-2 hover:text-cyan-300 transition-colors">
-              Enviar otro mensaje
-            </button>
+
+            <form v-else class="space-y-6" @submit.prevent="submit">
+
+              <div class="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <label for="nombre" class="mb-2 block text-sm font-semibold text-ink">Nombre</label>
+                  <input id="nombre" v-model="form.nombre" name="nombre" type="text" autocomplete="name"
+                    placeholder="Tu nombre" :class="fieldClass" required />
+                </div>
+                <div>
+                  <label for="email" class="mb-2 block text-sm font-semibold text-ink">Correo electrónico</label>
+                  <input id="email" v-model="form.email" name="email" type="email" autocomplete="email"
+                    placeholder="tu@empresa.com" :class="fieldClass" required />
+                </div>
+              </div>
+
+              <div>
+                <label for="mensaje" class="mb-2 block text-sm font-semibold text-ink">Mensaje</label>
+                <textarea id="mensaje" v-model="form.mensaje" name="mensaje" rows="5"
+                  placeholder="Cuéntame sobre la vacante o el proyecto"
+                  :class="[fieldClass, 'resize-y']" required></textarea>
+              </div>
+
+              <p v-if="status === 'error'" class="flex items-start gap-2 text-sm font-medium text-red-700" role="alert">
+                <Icon icon="heroicons:exclamation-triangle" class="mt-0.5 size-4 shrink-0" />
+                <span>
+                  No se pudo enviar el mensaje. Inténtalo de nuevo o escríbeme a
+                  <a :href="`mailto:${email}`" class="underline">{{ email }}</a>.
+                </span>
+              </p>
+
+              <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+                <p class="text-sm text-ink-soft">Todos los campos son obligatorios.</p>
+                <button type="submit" :disabled="status === 'sending'"
+                  class="inline-flex cursor-pointer btn-primary items-center gap-2 rounded-md bg-accent hover:bg-accent-dark px-7 py-3.5 font-semibold text-paper disabled:cursor-wait disabled:opacity-70">
+                  <Icon v-if="status === 'sending'" icon="heroicons:arrow-path" class="size-4 animate-spin" />
+                  {{ status === 'sending' ? 'Enviando…' : 'Enviar mensaje' }}
+                </button>
+              </div>
+            </form>
+            </Transition>
           </div>
-
-          <form v-else @submit.prevent="submit" class="space-y-4">
-
-            <div>
-              <label class="block text-xs text-slate-500 mb-1.5 font-mono uppercase tracking-wider">Nombre</label>
-              <input v-model="form.nombre" name="nombre" type="text" placeholder="Tu nombre"
-                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-100 text-sm placeholder-slate-600 focus:outline-none focus:border-cyan-400 transition-colors"
-                required />
-            </div>
-
-            <div>
-              <label class="block text-xs text-slate-500 mb-1.5 font-mono uppercase tracking-wider">Correo
-                electrónico</label>
-              <input v-model="form.email" name="email" type="email" placeholder="tu@email.com"
-                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-100 text-sm placeholder-slate-600 focus:outline-none focus:border-cyan-400 transition-colors"
-                required />
-            </div>
-
-            <div>
-              <label class="block text-xs text-slate-500 mb-1.5 font-mono uppercase tracking-wider">
-                Cuéntame tu proyecto
-              </label>
-              <textarea v-model="form.mensaje" name="mensaje" rows="5"
-                placeholder="¿Qué quieres construir? ¿Cuál es el problema que resuelve?"
-                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-100 text-sm placeholder-slate-600 focus:outline-none focus:border-cyan-400 transition-colors resize-none"
-                required></textarea>
-            </div>
-
-            <p v-if="status === 'error'" class="text-red-400 text-xs font-mono flex items-center gap-2">
-              <Icon icon="heroicons:exclamation-triangle" class="w-4 h-4 shrink-0" />
-              Algo salió mal. Escríbeme directo por WhatsApp.
-            </p>
-
-            <button type="submit" :disabled="status === 'sending'"
-              class="w-full inline-flex items-center justify-center cursor-pointer gap-2 bg-cyan-400 text-slate-950 font-semibold py-3 rounded-lg hover:bg-cyan-300 transition-colors duration-200 text-sm disabled:opacity-60 disabled:cursor-not-allowed">
-              <Icon v-if="status === 'sending'" icon="heroicons:arrow-path" class="w-4 h-4 animate-spin" />
-              <Icon v-else icon="heroicons:paper-airplane" class="w-4 h-4" />
-              <span>{{ status === 'sending' ? 'Enviando...' : 'Enviar mensaje' }}</span>
-            </button>
-          </form>
         </div>
 
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 mt-24 pt-8 border-t border-slate-800">
-      <p class="text-slate-600 text-xs text-center font-mono">
-        &copy; 2026 &middot; José Gallegos &middot; Desarrollado con Vue + Vite
-      </p>
-    </div>
+    <footer class="mx-auto max-w-6xl border-t border-ink/10 px-4 py-6 sm:px-6">
+      <p class="text-xs text-ink-soft">&copy; 2026 José Gallegos · Hecho con Vue y Vite</p>
+    </footer>
   </section>
 </template>
